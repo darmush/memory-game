@@ -3,6 +3,12 @@
 
        color-scheme: light;
 
+       --paper: #FAFAFA;
+       --paper-alt: #F0F0F0;
+       --ink: #1C1C1C;
+       --line-soft: #CFCFCF;
+
+
        --space-1: 4px;
        --space-2: 8px;
        --space-3: 12px;
@@ -17,6 +23,12 @@
        --stroke-strong: 2px;
        --radius-0: 0;
        --radius-full: 999px;
+
+       --card-width: 100px;
+       --card-height: 100px;
+       --modal-width: 400px;
+       --margin: 16px;
+       --border: 1px;
    }
 
    *,
@@ -91,3 +103,62 @@
    .no-scroll {
        overflow: hidden;
    }
+
+   .game-container {
+       display: flex;
+       flex-direction: column;
+       align-items: center;
+       justify-content: center;
+       height: 100vh;
+   }
+
+   .interface-container {
+       display: flex;
+       gap: var(--space-4);
+       margin-bottom: var(--space-5);
+   }
+
+   .game-board {
+       display: grid;
+       grid-template-columns: repeat(4, 1fr);
+       gap: var(--space-4);
+   }
+
+
+   .card {
+       width: var(--card-width);
+       height: var(--card-height);
+       background-color: var(--paper-alt);
+       border: var(--border) solid var(--line-soft);
+       display: flex;
+       align-items: center;
+       justify-content: center;
+       cursor: pointer;
+   }
+
+
+   .modal {
+       min-width: var(--modal-width);
+       padding: var(--space-5);
+
+       background: var(--paper);
+       border-radius: var(--radius-0);
+
+       border: 0;
+       background: var(--paper);
+       color: var(--ink);
+       overflow-y: auto;
+       overscroll-behavior: contain;
+   }
+
+   .modal::backdrop {
+       background: rgb(0 0 0 / .6);
+   }
+
+   html:has(.modal[open]) {
+       background: color-mix(in srgb, var(--paper) 40%, black);
+   }
+
+   /* .modal :focus-visible {
+       outline-offset: 0;
+   } */
