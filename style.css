@@ -54,6 +54,10 @@ html {
     scrollbar-gutter: stable;
 }
 
+html:has(dialog[open]) {
+    overflow: hidden;
+}
+
 body {
     margin: 0;
     background: var(--page);
@@ -100,12 +104,12 @@ button {
     gap: var(--space-2);
     color: var(--light);
     white-space: nowrap;
+    font-variant-numeric: tabular-nums;
 }
 
-/* dot between the two counters */
-.matched-pairs-counter::before {
-    content: "·";
-    margin-right: var(--space-2);
+/* room for a two-digit count, so the text does not shift */
+.moves-counter {
+    min-width: 9ch;
 }
 
 .start-button {
@@ -118,6 +122,7 @@ button {
 
 .start-button,
 .ranking-button {
+    min-width: 104px;
     padding: 6px 12px;
     background: transparent;
     border: var(--border) solid var(--line);
@@ -231,6 +236,12 @@ button {
     margin-left: -5.5px;
     background: var(--bulb-off);
     border-radius: 50% 50% 50% 50% / 38% 38% 62% 62%;
+    transition: background-color var(--flip-time), box-shadow var(--flip-time);
+}
+
+.bulb.lit {
+    background: var(--pair-color, var(--light));
+    box-shadow: 0 0 8px var(--pair-color, var(--light));
 }
 
 /* bulb positions follow the wire curve */
@@ -336,14 +347,18 @@ button {
 
 .modal {
     width: min(var(--modal-width), 100vw - 2 * var(--margin));
+    padding: 0;
+    border: 0;
+    background: transparent;
+}
+
+.modal-container {
     padding: var(--space-5);
     background: var(--panel);
     border: var(--border) solid var(--line);
     border-radius: var(--radius-modal);
     color: var(--text-dim);
     text-align: center;
-    overflow-y: auto;
-    overscroll-behavior: contain;
 }
 
 .modal::backdrop {

@@ -52,6 +52,7 @@ function checkForMatch() {
         firstCard.classList.add('matched');
         secondCard.classList.add('matched');
         gameState.matchedPairs++;
+        lightUpGarland(firstCard.dataset.value);
         updatePairsCounter();
         resetStateCards();
 
@@ -76,6 +77,20 @@ function resetStateCards() {
     gameState.secondCard = null;
 }
 
+function lightUpGarland(value) {
+    const bulbs = gameState.gameContainer.querySelectorAll('.bulb');
+    const bulb = bulbs[gameState.matchedPairs - 1];
+    bulb.dataset.value = value;
+    bulb.classList.add('lit');
+}
+
+function resetGarland() {
+    gameState.gameContainer.querySelectorAll('.bulb').forEach(bulb => {
+        bulb.classList.remove('lit');
+        delete bulb.dataset.value;
+    });
+}
+
 function finishGame() {
     openModalWin(newGame);
 }
@@ -83,6 +98,7 @@ function finishGame() {
 export function newGame() {
     gameState.gameBoard?.remove();
     resetGameState();
+    resetGarland();
     updateMovesCounter();
     updatePairsCounter();
     startGame();

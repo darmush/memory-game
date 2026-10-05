@@ -24,13 +24,15 @@ export function createCard(value, appendTo) {
 
 export function createModal(content) {
     const modal = createElement('dialog', 'modal', null, document.body);
+    const container = createElement('div', 'modal-container', null, modal);
 
-    const closeButton = createElement('button', 'modal-close', '×', modal);
+    const closeButton = createElement('button', 'modal-close', '×', container);
+    closeButton.setAttribute('aria-label', 'Close');
     closeButton.addEventListener('click', () => {
         modal.close();
     });
 
-    modal.append(content);
+    container.append(content);
     let pressedOnBackdrop = false;
 
     modal.addEventListener('pointerdown', (event) => {
