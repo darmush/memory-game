@@ -1,13 +1,8 @@
 export const BOARD_ROWS = 4;
 export const BOARD_COLS = 4;
 
-export const CARD_VALUES = [
-    'red', 'red',
-    'orange', 'orange',
-    'yellow', 'yellow',
-    'green', 'green',
-    'cyan', 'cyan',
-    'blue', 'blue',
-    'purple', 'purple',
-    'pink', 'pink',
-];
+export const PAIR_VALUES = ['red', 'orange', 'yellow', 'green', 'cyan', 'blue', 'purple', 'pink'];
+export const PAIR_COUNT = (BOARD_ROWS * BOARD_COLS) / 2;
+
+const usedValues = PAIR_VALUES.slice(0, PAIR_COUNT);
+export const CARD_VALUES = [...usedValues, ...usedValues];

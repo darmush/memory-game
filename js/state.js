@@ -8,5 +8,8 @@ export const gameState = {
     matchedPairs: 0,
     moves: 0,
 
+    movesCounter: null,
+    pairsCounter: null,
+
     isLocked: false
 };

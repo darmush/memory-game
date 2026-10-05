@@ -1,11 +1,10 @@
-import { createInterface } from './layout.js';
-import { startGame } from './game.js';
-import { createGameContainer } from './layout.js';
+import { createInterface, createGameContainer } from './layout.js';
 import { gameState } from './state.js';
+import { startGame, newGame } from './game.js';
 
-export default function init() {
+function init() {
     gameState.gameContainer = createGameContainer();
-    createInterface(gameState.gameContainer);
+    createInterface(gameState.gameContainer, newGame);
     gameState.gameBoard = startGame();
 }
 
