@@ -336,13 +336,16 @@ button {
 
 /* found pair lights up in its own colour */
 .card.matched {
+    background-color: var(--panel);
     border-color: var(--pair-color);
-    box-shadow: none;
+    box-shadow: 0 0 6px color-mix(in srgb, var(--pair-color) 60%, transparent),
+        inset 0 0 9px color-mix(in srgb, var(--pair-color) 33%, transparent);
     cursor: default;
 }
 
 .card.matched::before {
     background-image: var(--shape-lit);
+    filter: drop-shadow(0 0 2px var(--pair-color));
 }
 
 .modal {
