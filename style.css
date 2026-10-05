@@ -143,6 +143,28 @@ button {
     transform: translateY(1px);
 }
 
+/* narrow screens: counters on the first row, buttons on the second */
+@media (max-width: 479px) {
+    .interface-container {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .counters-container {
+        grid-column: 1 / -1;
+        grid-row: 1;
+        justify-content: center;
+    }
+
+    /* buttons meet in the middle */
+    .start-button {
+        justify-self: end;
+    }
+
+    .ranking-button {
+        justify-self: start;
+    }
+}
+
 /* pair colour and shape by card value */
 [data-value="red"] {
     --pair-color: #FF5A4E;
@@ -386,8 +408,7 @@ button {
     font-weight: 400;
 }
 
-/* first place */
-.ranking-row:first-child {
+.ranking-table td {
     color: var(--light);
 }
 

@@ -40,7 +40,7 @@ export function createModal(content) {
 
     modal.addEventListener('click', (event) => {
         const isBackdrop = pressedOnBackdrop && event.target === modal;
-        if (isBackdrop || event.target.closest('.modal-close')) modal.close();
+        if (isBackdrop) modal.close();
     });
 
     modal.addEventListener('close', () => modal.remove());

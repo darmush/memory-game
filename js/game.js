@@ -4,21 +4,9 @@ import { updateMovesCounter, updatePairsCounter } from './layout.js';
 import { CARD_VALUES, BOARD_ROWS, BOARD_COLS, PAIR_COUNT, DELAY_TO_CLOSE_CARDS } from './constants.js';
 import { openModalWin } from './modals.js';
 
-
-function randomize(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-
-        [array[i], array[j]] = [array[j], array[i]];
-    }
-
-    return array;
-}
-
 export function createGameBoard(rows, cols) {
-    const gameContainer = document.querySelector('.game-container');
+    const gameContainer = gameState.gameContainer;
     const gameBoard = createElement('div', 'game-board', null, gameContainer);
-
     const shuffledCards = randomize([...CARD_VALUES]);
     gameBoard.style.setProperty('--cols', cols);
 
@@ -30,18 +18,20 @@ export function createGameBoard(rows, cols) {
 
 export function startGame() {
     const gameBoard = createGameBoard(BOARD_ROWS, BOARD_COLS);
-    gameState.gameBoard = gameBoard;
 
+    gameState.gameBoard = gameBoard;
     gameBoard.addEventListener('click', onCardClick);
+
     return gameBoard;
 }
 
 function onCardClick(event) {
     const card = event.target.closest('.card');
+
     if (!card || gameState.isLocked || card === gameState.firstCard || card === gameState.secondCard || card.classList.contains('matched')) {
-        console.log('Card click ignored:', card, gameState.isLocked, gameState.firstCard, gameState.secondCard);
         return;
     }
+
     card.classList.add('open');
 
     if (!gameState.firstCard) {
@@ -64,6 +54,7 @@ function checkForMatch() {
         gameState.matchedPairs++;
         updatePairsCounter();
         resetStateCards();
+
         if (gameState.matchedPairs === PAIR_COUNT) {
             finishGame();
         }
@@ -77,9 +68,7 @@ function checkForMatch() {
         resetStateCards();
         gameState.isLocked = false;
     }, DELAY_TO_CLOSE_CARDS);
-
 }
-
 
 
 function resetStateCards() {
@@ -109,3 +98,12 @@ export function resetGameState() {
     clearTimeout(gameState.timer);
     gameState.timer = null;
 }
+
+function randomize(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
