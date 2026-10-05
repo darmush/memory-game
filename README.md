@@ -4,6 +4,9 @@ A card-matching game: flip the cards, remember where they are, and find all 8 pa
 
 **Demo:** https://darmush.github.io/memory-game/
 
+<img width="277" height="441" alt="Recording 2026-10-06 021022" src="https://github.com/user-attachments/assets/eb2a2782-b8c1-47cd-94d8-d30135dce80b" />
+
+
 ## Tech stack
 
 - HTML, CSS, JavaScript (ES modules)
