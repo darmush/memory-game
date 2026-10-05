@@ -5,7 +5,7 @@ import { startGame, newGame } from './game.js';
 function init() {
     gameState.gameContainer = createGameContainer();
     createInterface(gameState.gameContainer, newGame);
-    gameState.gameBoard = startGame();
+    startGame();
 }
 
 init();

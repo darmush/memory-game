@@ -11,5 +11,6 @@ export const gameState = {
     movesCounter: null,
     pairsCounter: null,
 
-    isLocked: false
+    isLocked: false,
+    timer: null,
 };

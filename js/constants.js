@@ -6,3 +6,5 @@ export const PAIR_COUNT = (BOARD_ROWS * BOARD_COLS) / 2;
 
 const usedValues = PAIR_VALUES.slice(0, PAIR_COUNT);
 export const CARD_VALUES = [...usedValues, ...usedValues];
+
+export const DELAY_TO_CLOSE_CARDS = 700;

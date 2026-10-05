@@ -1,7 +1,8 @@
 import { createElement, createCard } from './dom.js';
 import { gameState } from './state.js';
 import { updateMovesCounter, updatePairsCounter } from './layout.js';
-import { CARD_VALUES, BOARD_ROWS, BOARD_COLS } from './constants.js';
+import { CARD_VALUES, BOARD_ROWS, BOARD_COLS, PAIR_COUNT, DELAY_TO_CLOSE_CARDS } from './constants.js';
+import { openModalWin } from './modals.js';
 
 
 function randomize(array) {
@@ -28,7 +29,66 @@ export function createGameBoard(rows, cols) {
 }
 
 export function startGame() {
-    return createGameBoard(BOARD_ROWS, BOARD_COLS);
+    const gameBoard = createGameBoard(BOARD_ROWS, BOARD_COLS);
+    gameState.gameBoard = gameBoard;
+
+    gameBoard.addEventListener('click', onCardClick);
+    return gameBoard;
+}
+
+function onCardClick(event) {
+    const card = event.target.closest('.card');
+    if (!card || gameState.isLocked || card === gameState.firstCard || card === gameState.secondCard || card.classList.contains('matched')) {
+        console.log('Card click ignored:', card, gameState.isLocked, gameState.firstCard, gameState.secondCard);
+        return;
+    }
+    card.classList.add('open');
+
+    if (!gameState.firstCard) {
+        gameState.firstCard = card;
+        return;
+    }
+
+    gameState.secondCard = card;
+    gameState.moves++;
+    updateMovesCounter();
+    checkForMatch();
+}
+
+function checkForMatch() {
+    const { firstCard, secondCard } = gameState;
+
+    if (firstCard.dataset.value === secondCard.dataset.value) {
+        firstCard.classList.add('matched');
+        secondCard.classList.add('matched');
+        gameState.matchedPairs++;
+        updatePairsCounter();
+        resetStateCards();
+        if (gameState.matchedPairs === PAIR_COUNT) {
+            finishGame();
+        }
+        return;
+    }
+
+    gameState.isLocked = true;
+    gameState.timer = setTimeout(() => {
+        firstCard.classList.remove('open');
+        secondCard.classList.remove('open');
+        resetStateCards();
+        gameState.isLocked = false;
+    }, DELAY_TO_CLOSE_CARDS);
+
+}
+
+
+
+function resetStateCards() {
+    gameState.firstCard = null;
+    gameState.secondCard = null;
+}
+
+function finishGame() {
+    openModalWin(newGame);
 }
 
 export function newGame() {
@@ -36,7 +96,7 @@ export function newGame() {
     resetGameState();
     updateMovesCounter();
     updatePairsCounter();
-    gameState.gameBoard = startGame();
+    startGame();
 }
 
 export function resetGameState() {
@@ -46,4 +106,6 @@ export function resetGameState() {
     gameState.matchedPairs = 0;
     gameState.moves = 0;
     gameState.isLocked = false;
+    clearTimeout(gameState.timer);
+    gameState.timer = null;
 }
